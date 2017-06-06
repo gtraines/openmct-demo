@@ -14,8 +14,9 @@
             paths:{ 
                 "text": "node_modules/text/text",
                 "tutorials": "node_modules/openmct-tutorials",
-		"hopscotch": "node_modules/hopscotch/dist/js/hopscotch.min",
-		"http": "node_modules/openmct-tutorials/lib/http"
+		        "hopscotch": "node_modules/hopscotch/dist/js/hopscotch.min",
+		        "http": "node_modules/openmct-tutorials/lib/http",
+                "custom": "custom"
            },
            shim: {
                "tutorials/dictionary-plugin": {
@@ -26,6 +27,9 @@
                },
                "tutorials/historical-telemetry-plugin": {
                    exports: "HistoricalTelemetryPlugin",
+               },
+               "custom/styleguide/styleguide-plugin": {
+                   exports: "StyleguidePlugin"
                }
            }
         });
@@ -44,7 +48,8 @@
                 "./scripts/demo-objects",
                 "./scripts/scaled-image",
                 "./scripts/demo-time-conductor",
-		"./scripts/demo-tour.js"
+		        "./scripts/demo-tour.js",
+                "custom/styleguide/styleguide-plugin"
             ],
             function (
                 openmct,
@@ -54,7 +59,8 @@
                 DemoObjectsPlugin,
                 ScaledImagePlugin,
                 DemoTimeConductorPlugin,
-		DemoTourPlugin
+		        DemoTourPlugin,
+                StyleguidePlugin
             ) {
                   openmct.setAssetPath("node_modules/openmct/dist");
                   openmct.install(openmct.plugins.LocalStorage());
@@ -65,23 +71,35 @@
                   openmct.install(DemoObjectsPlugin());
                   openmct.install(ScaledImagePlugin());
                   openmct.install(DemoTimeConductorPlugin());
-		  openmct.install(DemoTourPlugin());
+                openmct.install(DemoTourPlugin());
 
-                  // Tutorial plugins
-		  openmct.install(DictionaryPlugin());
-                  openmct.install(RealtimeTelemetryPlugin());
-                  openmct.install(HistoricalTelemetryPlugin());
+                // Tutorial plugins
+                openmct.install(DictionaryPlugin());
+                openmct.install(RealtimeTelemetryPlugin());
+                openmct.install(HistoricalTelemetryPlugin());
+                openmct.install(StyleguidePlugin());
  
-                  // Other supporting plugins
-                  openmct.legacyRegistry.enable("example/msl");
-                  openmct.legacyRegistry.enable("example/imagery");
-                  openmct.install(openmct.plugins.Conductor({
-                      showConductor: true
+                // Other supporting plugins
+                openmct.legacyRegistry.enable("example/msl");
+                openmct.legacyRegistry.enable("example/imagery");
+
+                const ONE_YEAR = 365 * 24 * 60 * 60 * 1000;
+                const ONE_MINUTE = 60 * 1000;
+
+                openmct.install(openmct.plugins.Conductor({
+                    showConductor: true,
+                    menuOptions: [
+                        // 'Fixed' bounds mode configuration for the UTCTimeSystem
+                        {
+                            timeSystem: 'utc',
+                            bounds: {start: Date.now() - 30 * ONE_MINUTE, end: Date.now()},
+                            zoomOutLimit: ONE_YEAR,
+                            zoomInLimit: ONE_MINUTE
+                        }
+                    ]
                   }));
 
-                  openmct.install(openmct.plugins.MyItems());
-
-                  openmct.start();
+                openmct.start();
              }
         );
     </script>
