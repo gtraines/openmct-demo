@@ -1,0 +1,14 @@
+{
+  "objects": [
+    {
+      "key": "trxdata",
+      "name": "Upload Transaction Data",
+      "type": "folder"
+    },
+    {
+      "key": "uploadstatus",
+      "name": "Status of Previous Uploads",
+      "type": "folder"
+    }
+  ]
+}

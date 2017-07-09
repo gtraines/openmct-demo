@@ -19,7 +19,7 @@ define(
                     return Promise.resolve({
                         identifier: identifier,
                         name: "Style Guide Home",
-                        type: 'custom.styleguide',
+                        type: 'folder',
                         location: 'ROOT'
                     });
                 }
@@ -34,7 +34,7 @@ define(
                 return Promise.resolve([
                     {
                         namespace: "basketdevil",
-                        key: "styleguide.intros"
+                        key: "styleguide.intro"
                     }
                 ])
             }
@@ -44,10 +44,10 @@ define(
             return function install(openmct) {
                 console.log("Installing styleguide plugin");
 
-                openmct.types.addType("custom.styleguide", {
-                    name: 'Styleguide',
-                    description: 'Styleguide for MCT elements',
-                    cssClass: 'icon-folder'
+                openmct.types.addType("fileupload", {
+                    name: 'File Upload',
+                    description: 'File Upload',
+                    cssClass: 'glyphicon glyphicon-floppy-open'
                 });
                 styleguideTypeRegistry(openmct);
 

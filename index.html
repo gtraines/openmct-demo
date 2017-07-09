@@ -19,17 +19,14 @@
                 "custom": "custom"
            },
            shim: {
-               "tutorials/dictionary-plugin": {
-                   exports: "DictionaryPlugin"
-               },
                "tutorials/realtime-telemetry-plugin": {
                    exports: "RealtimeTelemetryPlugin"
                },
                "tutorials/historical-telemetry-plugin": {
                    exports: "HistoricalTelemetryPlugin",
                },
-               "custom/styleguide/styleguide-plugin": {
-                   exports: "StyleguidePlugin"
+               "custom/fileupload/fileupload-plugin": {
+                   exports: "FileUploadPlugin"
                }
            }
         });
@@ -42,25 +39,23 @@
 
         require([
                 "./node_modules/openmct/dist/openmct",
-                "tutorials/dictionary-plugin",
                 "tutorials/realtime-telemetry-plugin",
                 "tutorials/historical-telemetry-plugin",
                 "./scripts/demo-objects",
                 "./scripts/scaled-image",
                 "./scripts/demo-time-conductor",
 		        "./scripts/demo-tour.js",
-                "custom/styleguide/styleguide-plugin"
+                "custom/fileupload/fileupload-plugin"
             ],
             function (
                 openmct,
-                DictionaryPlugin,
                 RealtimeTelemetryPlugin,
                 HistoricalTelemetryPlugin,
                 DemoObjectsPlugin,
                 ScaledImagePlugin,
                 DemoTimeConductorPlugin,
 		        DemoTourPlugin,
-                StyleguidePlugin
+                FileUploadPlugin
             ) {
                   openmct.setAssetPath("node_modules/openmct/dist");
                   openmct.install(openmct.plugins.LocalStorage());
@@ -74,10 +69,9 @@
                 openmct.install(DemoTourPlugin());
 
                 // Tutorial plugins
-                openmct.install(DictionaryPlugin());
                 openmct.install(RealtimeTelemetryPlugin());
                 openmct.install(HistoricalTelemetryPlugin());
-                openmct.install(StyleguidePlugin());
+                openmct.install(FileUploadPlugin());
  
                 // Other supporting plugins
                 openmct.legacyRegistry.enable("example/msl");
