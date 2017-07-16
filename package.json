@@ -14,7 +14,7 @@
     "express": "^4.15.2",
     "hopscotch": "^0.2.7",
     "minimist": "^1.2.0",
-    "openmct": "github:nasa/openmct",
+    "openmct": "github:gtraines/openmct",
     "request": "^2.81.0",
     "requirejs": "^2.3.3",
     "text": "github:requirejs/text"
