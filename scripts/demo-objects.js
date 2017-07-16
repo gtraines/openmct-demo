@@ -41,8 +41,9 @@ define(
                     load: function (model) {
                         var id = model.identifier;
                         if (id.key === 'demo-objects') {
-                            return Promise.resolve(Object.keys(demoModels).filter(function (key) {
-                                return demoModels[key].location === 'demo:demo-objects';
+                            return Promise.resolve(
+                                Object.keys(demoModels).filter(function (key) {
+                                    return demoModels[key].location === 'demo:demo-objects';
                             }).map(function (key) {
                                 var childId = deserializeId(key); 
                                 return {

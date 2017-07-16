@@ -16,6 +16,7 @@
                 "tutorials": "node_modules/openmct-tutorials",
 		        "hopscotch": "node_modules/hopscotch/dist/js/hopscotch.min",
 		        "http": "node_modules/openmct-tutorials/lib/http",
+                "lodash": "node_modules/lodash",
                 "custom": "custom"
            },
            shim: {
@@ -27,6 +28,9 @@
                },
                "custom/fileupload/fileupload-plugin": {
                    exports: "FileUploadPlugin"
+               },
+               "lodash": {
+                   exports: "_"
                }
            }
         });
@@ -65,33 +69,40 @@
                   // Demo specific plugins
                   openmct.install(DemoObjectsPlugin());
                   openmct.install(ScaledImagePlugin());
-                  openmct.install(DemoTimeConductorPlugin());
+                  //openmct.install(DemoTimeConductorPlugin());
                 openmct.install(DemoTourPlugin());
 
                 // Tutorial plugins
-                openmct.install(RealtimeTelemetryPlugin());
-                openmct.install(HistoricalTelemetryPlugin());
+                //openmct.install(RealtimeTelemetryPlugin());
+                //openmct.install(HistoricalTelemetryPlugin());
                 openmct.install(FileUploadPlugin());
  
                 // Other supporting plugins
                 openmct.legacyRegistry.enable("example/msl");
-                openmct.legacyRegistry.enable("example/imagery");
+                //openmct.legacyRegistry.enable("example/imagery");
 
                 const ONE_YEAR = 365 * 24 * 60 * 60 * 1000;
                 const ONE_MINUTE = 60 * 1000;
 
-                openmct.install(openmct.plugins.Conductor({
-                    showConductor: true,
-                    menuOptions: [
-                        // 'Fixed' bounds mode configuration for the UTCTimeSystem
-                        {
-                            timeSystem: 'utc',
-                            bounds: {start: Date.now() - 30 * ONE_MINUTE, end: Date.now()},
-                            zoomOutLimit: ONE_YEAR,
-                            zoomInLimit: ONE_MINUTE
-                        }
-                    ]
-                  }));
+//                openmct.install(openmct.plugins.Conductor({
+//                    showConductor: false,
+//                    menuOptions: [
+//                        // 'Fixed' bounds mode configuration for the UTCTimeSystem
+//                        {
+//                            timeSystem: 'utc',
+//                            bounds: {start: Date.now() - 30 * ONE_MINUTE, end: Date.now()},
+//                            zoomOutLimit: ONE_YEAR,
+//                            zoomInLimit: ONE_MINUTE
+//                        }
+//                    ]
+//                  }));
+
+                var arrayOfStuff = ['first item', 'second item', 'something else'];
+                _.each(arrayOfStuff, function (item) {
+                    console.log(item);
+                });
+
+
 
                 openmct.start();
              }

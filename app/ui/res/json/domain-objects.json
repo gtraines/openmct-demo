@@ -1,0 +1,11 @@
+{
+  "pages": {
+    "intro": { "name": "Introduction", "type": "basketdevil.ui.intro", "location": "basketdevil.portal:ui" },
+    "standards": { "name": "Standards", "type": "basketdevil.ui.standards", "location": "basketdevil.portal:ui" },
+    "colors": { "name": "Colors", "type": "basketdevil.ui.colors", "location": "basketdevil.portal:ui" },
+    "glyphs": { "name": "Glyphs", "type": "basketdevil.ui.glyphs", "location": "basketdevil.portal:ui" },
+    "controls": { "name": "Controls", "type": "basketdevil.ui.controls", "location": "basketdevil.portal:ui" },
+    "input": { "name": "Text Inputs", "type": "basketdevil.ui.input", "location": "basketdevil.portal:ui" },
+    "menus": { "name": "Menus", "type": "basketdevil.ui.menus", "location": "basketdevil.portal:ui" }
+  }
+}

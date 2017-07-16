@@ -3,76 +3,94 @@
  */
 
 define(
-    [],
-    function () {
+    [
+        "../../app/common/config",
+        "text!./res/fileuploadobjects.json"
+    ],
+    function (
+        config,
+        fileUploadObjects
+    ) {
         'use strict';
 
-        const PORTAL_NAMESPACE = "basketdevil.portal";
-        const UPLOAD_ROOT_ID = "uploadroot";
-        const UPLOAD_ROOT_TYPE = 'basketdevil.fileupload';
+        fileUploadObjects = JSON.parse(fileUploadObjects);
+        console.log(fileUploadObjects);
+        const PORTAL_NAMESPACE = config.NAMESPACE;
+        const UPLOAD_ROOT_ID = config.ROOTS.UPLOAD;
+        const UPLOAD_ROOT_TYPE = config.NAMESPACE + '.fileupload';
 
 
         var objectProvider = {
             get: function (identifier) {
+                var objects = fileUploadObjects.objects;
                 console.log(identifier);
-                return getFileUploadObjects().then(
-                    function (objects) {
-                        var returnObject = {};
-                        if (identifier.key === UPLOAD_ROOT_ID) {
-                            returnObject = {
-                                identifier: identifier,
-                                name: "File Upload",
-                                type: UPLOAD_ROOT_TYPE,
-                                location: "ROOT"
-                            };
-                        } else {
-                            var objectModel = objects.filter(function (obj) {
-                                console.log(obj);
-                                return obj.key === identifier.key;
-                            })[0];
-                            console.log(objectModel);
-                            returnObject = {
-                                identifier: identifier,
-                                name: objectModel.name,
-                                type: objectModel.type,
-                                location: PORTAL_NAMESPACE + ":" + UPLOAD_ROOT_ID
-                            }
-                        }
 
-                        console.log(returnObject);
-                        return returnObject;
-                    });
+                var returnObject = {};
+                if (identifier.key === UPLOAD_ROOT_ID) {
+
+                    returnObject = {
+                        identifier: identifier,
+                        name: "File Upload",
+                        type: UPLOAD_ROOT_TYPE,
+                        location: "ROOT",
+                        composition: [
+                            serializeId({ namespace: PORTAL_NAMESPACE, key: 'trxdata' }),
+                            serializeId({ namespace: PORTAL_NAMESPACE, key: 'uploadstatus' })
+                        ]
+                    };
+                } else {
+                    console.log("Not equal to the upload root");
+                    console.log(identifier);
+                    var objectModel =
+                        objects.filter(function (obj) {
+                            return obj.identifier.key === identifier.key;
+                        })[0];
+
+                    console.log(objectModel);
+
+                    returnObject = objectModel;
+                }
+                console.log("Should be the same as above");
+                console.log(returnObject);
+                return Promise.resolve(returnObject);
             }
         };
 
         var compositionProvider = {
             appliesTo: function (domainObject) {
-                return domainObject.identifier.namespace === PORTAL_NAMESPACE &&
-                        domainObject.type === UPLOAD_ROOT_TYPE;
-            },
-            load: function (domainObject) {
-                console.log("Domain Object:")
+                console.log("Does it apply?");
                 console.log(domainObject);
-                return getFileUploadObjects().then(function (objects) {
-                    console.log(objects);
-                    return Promise.resolve(objects.map(function (obj) {
-                        console.log(obj);
-                        return {
-                            namespace: PORTAL_NAMESPACE,
-                            key: obj.key
-                        }
-                    }))
-                });
+
+                return domainObject.identifier.namespace === PORTAL_NAMESPACE &&
+                    domainObject.type === UPLOAD_ROOT_TYPE;
+            },
+            load: function (model) {
+                var objects = fileUploadObjects.objects;
+
+                return Promise.resolve(objects.map(function (obj) {
+                    return {
+                        namespace: 'basketdevil',
+                        key: obj.identifier.key
+                    }
+                }));
             }
         };
 
-        function getFileUploadObjects() {
-            return http.get(
-                        '/custom/fileupload/res/fileuploadobjects.json'
-            ).then(function (result) {
-                    console.log(result);
-                    return result.data.objects;
-                })
+        function serializeId(id) {
+            return id.namespace + ':' + id.key;
+        }
+
+        function deserializeId(serializedId) {
+            var tokens = serializedId.split(':');
+            return {
+                namespace: tokens[0],
+                key: tokens[1]
+            };
+        }
+
+        function addIdentifier(object, identifier) {
+            object.identifier = identifier;
+            return object;
         }
 
         function FileUploadPlugin() {
@@ -85,14 +103,21 @@ define(
                         cssClass: 'icon-save'
                     });
 
+                openmct.types.addType(PORTAL_NAMESPACE + ".input",
+                    {
+                        name: "Text Inputs",
+                        cssClass: "icon-page",
+                        description: "Various text inputs"
+                    });
+
                 openmct.objects.addRoot({
                     namespace: PORTAL_NAMESPACE,
                     key: UPLOAD_ROOT_ID
                 });
 
-                openmct.objects.addProvider(PORTAL_NAMESPACE, objectProvider);
-
                 openmct.composition.addProvider(compositionProvider);
+
+                openmct.objects.addProvider(PORTAL_NAMESPACE, objectProvider);
             }
         }
 

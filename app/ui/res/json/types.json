@@ -1,0 +1,11 @@
+{
+  "types": [
+    { "key": "basketdevil.ui.intro", "name": "Introduction", "cssClass": "icon-page", "description": "Introduction and overview to the style guide" },
+    { "key": "basketdevil.ui.standards", "name": "Standards", "cssClass": "icon-page", "description": "" },
+    { "key": "basketdevil.ui.colors", "name": "Colors", "cssClass": "icon-page", "description": "" },
+    { "key": "basketdevil.ui.glyphs", "name": "Glyphs", "cssClass": "icon-page", "description": "Glyphs overview" },
+    { "key": "basketdevil.ui.controls", "name": "Controls", "cssClass": "icon-page", "description": "Buttons, selects, HTML controls" },
+    { "key": "basketdevil.ui.input", "name": "Text Inputs", "cssClass": "icon-page", "description": "Various text inputs" },
+    { "key": "basketdevil.ui.menus", "name": "Menus", "cssClass": "icon-page", "description": "Context menus, dropdowns" }
+  ]
+}

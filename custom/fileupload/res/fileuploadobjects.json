@@ -1,14 +1,35 @@
 {
   "objects": [
     {
-      "key": "trxdata",
+      "identifier": {
+        "namespace":"basketdevil",
+        "key": "trxdata"
+      },
       "name": "Upload Transaction Data",
-      "type": "folder"
+      "type": "folder",
+      "location": "basketdevil:fileupload",
+      "composition": [
+        "basketdevil:input"
+      ]
     },
     {
-      "key": "uploadstatus",
+      "identifier": {
+        "namespace":"basketdevil",
+        "key": "uploadstatus"
+      },
       "name": "Status of Previous Uploads",
-      "type": "folder"
+      "type": "image-include",
+      "url": "https://github.com/gtraines/OpenMFD/raw/master/res/freespace2_screenshot.png",
+      "location": "basketdevil:fileupload"
+    },
+    {
+      "identifier": {
+        "namespace":"basketdevil",
+        "key": "input"
+      },
+      "name": "Status of Previous Uploads",
+      "type": "basketdevil.input",
+      "location": "basketdevil:trxdata"
     }
   ]
 }

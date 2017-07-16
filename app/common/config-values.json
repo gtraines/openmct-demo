@@ -1,0 +1,7 @@
+{
+  "NAMESPACE": "basketdevil",
+  "ROOTS": {
+      "UPLOAD": "fileupload",
+      "UI": "ui"
+  }
+}
